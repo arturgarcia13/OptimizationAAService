@@ -1,0 +1,41 @@
+# ===================================================================
+# render.yaml — Configuração declarativa do deploy no Render
+#
+# Documentação: https://render.com/docs/blueprint-spec
+# Para usar: conecte este repositório no Render e ele detectará
+# automaticamente este arquivo.
+#
+# IMPORTANTE: Configure a variável API_KEY no painel do Render:
+#   Dashboard → Service → Environment → Add Environment Variable
+# ===================================================================
+
+services:
+  - type: web
+    name: optimization-aa-service
+    runtime: python
+    plan: free
+    region: oregon
+
+    # Comando de build: instala as dependências
+    buildCommand: pip install -r requirements.txt
+
+    # Comando de start: uvicorn com a app FastAPI
+    startCommand: uvicorn src.api:app --host 0.0.0.0 --port $PORT
+
+    # Health check — o Render usa esta rota para verificar se o serviço está online
+    healthCheckPath: /health
+
+    # Variáveis de ambiente (valores sensíveis devem ser configurados no painel)
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.0"
+      - key: DEBUG
+        value: "false"
+      - key: SOLVER_DEFAULT_TIME_LIMIT
+        value: "60"
+      - key: SOLVER_MAX_TIME_LIMIT
+        value: "120"
+      # API_KEY: configure manualmente no painel do Render (não commite aqui!)
+      # Dashboard → Service → Environment → Add Environment Variable
+      # - key: API_KEY
+      #   value: <sua-chave-secreta>
