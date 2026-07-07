@@ -1,0 +1,25 @@
+# ===================================================================
+# Dependências do projeto — Optimization-as-a-Service
+# Corte Unidimensional com Google OR-Tools + FastAPI
+# ===================================================================
+
+# Framework web
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+
+# Validação e serialização
+pydantic==2.10.3
+pydantic-settings==2.6.1
+
+# Solver de otimização
+ortools==9.15.6755
+
+# Carregamento do .env
+python-dotenv==1.0.1
+
+# ===================================================================
+# Dependências de desenvolvimento / testes
+# ===================================================================
+pytest==8.3.4
+pytest-cov==6.0.0
+httpx==0.28.1         # necessário para TestClient do FastAPI

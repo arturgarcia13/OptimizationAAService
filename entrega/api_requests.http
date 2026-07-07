@@ -1,0 +1,138 @@
+### api_requests.http — Exemplos de requisições para testar a API
+### Use com a extensão REST Client do VS Code ou o IntelliJ HTTP Client.
+### Documentação completa: http://localhost:8000/docs
+
+@base_url = https://optimization-aa-service.onrender.com 
+### http://localhost:8000
+@api_key = B2p_5muxvOB8CKcZBwBGlRsoxVahh9G4k7Pld8k8-mg
+
+# ===================================================================
+# 1. Health Check — verifica se a API está no ar (sem autenticação)
+# ===================================================================
+### GET /health
+GET {{base_url}}/health
+Content-Type: application/json
+
+###
+
+# ===================================================================
+# 2. Otimização — instância do enunciado do projeto
+#    Resultado esperado: OPTIMAL, 4 barras, desperdício ~ 3100mm
+# ===================================================================
+### POST /otimizar — instância clássica (3 tipos de itens)
+POST {{base_url}}/otimizar
+Content-Type: application/json
+X-API-Key: {{api_key}}
+
+{
+  "comprimento_padrao": 3000,
+  "itens": [
+    {"id": "item_A", "comprimento": 1150, "quantidade": 3},
+    {"id": "item_B", "comprimento": 800,  "quantidade": 4},
+    {"id": "item_C", "comprimento": 450,  "quantidade": 5}
+  ]
+}
+
+###
+
+# ===================================================================
+# 3. Otimização com time_limit customizado de 30 segundos
+# ===================================================================
+### POST /otimizar — com time_limit customizado
+POST {{base_url}}/otimizar
+Content-Type: application/json
+X-API-Key: {{api_key}}
+
+{
+  "comprimento_padrao": 3000,
+  "itens": [
+    {"id": "item_A", "comprimento": 1150, "quantidade": 3},
+    {"id": "item_B", "comprimento": 800,  "quantidade": 4},
+    {"id": "item_C", "comprimento": 450,  "quantidade": 5}
+  ],
+  "time_limit": 30
+}
+
+###
+
+# ===================================================================
+# 4. Erro de autenticação — sem cabeçalho X-API-Key
+#    Resultado esperado: 403 Forbidden
+# ===================================================================
+### POST /otimizar — sem API Key (deve retornar 403)
+POST {{base_url}}/otimizar
+Content-Type: application/json
+
+{
+  "comprimento_padrao": 1000,
+  "itens": [{"id": "A", "comprimento": 500, "quantidade": 2}]
+}
+
+###
+
+# ===================================================================
+# 5. Erro de autenticação — API Key incorreta
+#    Resultado esperado: 403 Forbidden
+# ===================================================================
+### POST /otimizar — API Key errada (deve retornar 403)
+POST {{base_url}}/otimizar
+Content-Type: application/json
+X-API-Key: chave-incorreta
+
+{
+  "comprimento_padrao": 1000,
+  "itens": [{"id": "A", "comprimento": 500, "quantidade": 2}]
+}
+
+###
+
+# ===================================================================
+# 6. Erro de validação — item maior que a barra
+#    Resultado esperado: 422 Unprocessable Entity
+# ===================================================================
+### POST /otimizar — item com comprimento > comprimento_padrao
+POST {{base_url}}/otimizar
+Content-Type: application/json
+X-API-Key: {{api_key}}
+
+{
+  "comprimento_padrao": 1000,
+  "itens": [{"id": "grande", "comprimento": 1500, "quantidade": 1}]
+}
+
+###
+
+# ===================================================================
+# 7. Erro de validação — time_limit acima do máximo
+#    Resultado esperado: 422 Unprocessable Entity
+# ===================================================================
+### POST /otimizar — time_limit=200 (acima do máximo de 120s)
+POST {{base_url}}/otimizar
+Content-Type: application/json
+X-API-Key: {{api_key}}
+
+{
+  "comprimento_padrao": 3000,
+  "itens": [
+    {"id": "item_A", "comprimento": 1150, "quantidade": 3}
+  ],
+  "time_limit": 200
+}
+
+###
+
+# ===================================================================
+# 8. Instância simples — 1 item que preenche a barra exatamente
+#    Resultado esperado: OPTIMAL, 2 barras, 0 de desperdício
+# ===================================================================
+### POST /otimizar — instância trivial sem desperdício
+POST {{base_url}}/otimizar
+Content-Type: application/json
+X-API-Key: {{api_key}}
+
+{
+  "comprimento_padrao": 1000,
+  "itens": [{"id": "exato", "comprimento": 1000, "quantidade": 2}]
+}
+
+###
