@@ -1,3 +1,9 @@
+---
+name: projeto-final
+description: Documento do Projeto Final da disciplina
+alwaysApply: false
+---
+
 Laboratório de Otimização — UFC Projeto Final da Disciplina 
 
 Projeto Final da Disciplina 

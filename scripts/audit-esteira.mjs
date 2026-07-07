@@ -12,6 +12,7 @@ const ROOT = resolve(process.argv[2] || ".");
 const IGNORE_DIRS = new Set([
   "node_modules", ".git", ".spec-driven",
   ".agents", ".cursor", ".gemini", ".windsurf",
+  ".venv", ".pytest_cache",
 ]);
 const NO_FRONTMATTER_OK = new Set(["RELEASING.md", "CHANGELOG.md"]);
 // Arquivos de instruções gerados (fora de um dir próprio) que também são views derivadas.

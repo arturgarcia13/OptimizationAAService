@@ -1,3 +1,9 @@
+---
+name: ADR-0004
+description: Render como plataforma de deploy da API
+alwaysApply: false
+---
+
 # ADR-0004: Render como plataforma de deploy da API
 
 **Data:** 2026-07-06

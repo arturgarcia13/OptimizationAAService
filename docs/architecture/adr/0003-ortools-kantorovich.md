@@ -1,3 +1,9 @@
+---
+name: ADR-0003
+description: OR-Tools com formulação de Kantorovich para o solver
+alwaysApply: false
+---
+
 # ADR-0003: OR-Tools com formulação de Kantorovich para o solver de corte unidimensional
 
 **Data:** 2026-07-06

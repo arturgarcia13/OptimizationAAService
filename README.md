@@ -1,7 +1,7 @@
 ---
 name: README
 description: Manual de instalação, formulação e uso da API. 
-alwaysApply: fals
+alwaysApply: false
 ---
 
 # API de Otimização — Corte Unidimensional (1D Cutting Stock Problem)

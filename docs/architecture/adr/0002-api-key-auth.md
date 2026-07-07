@@ -1,3 +1,9 @@
+---
+name: ADR-0002
+description: API Key como mecanismo de autenticação da rota de otimização
+alwaysApply: false
+---
+
 # ADR-0002: API Key como mecanismo de autenticação da rota de otimização
 
 **Data:** 2026-07-06
